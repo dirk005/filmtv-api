@@ -1,9 +1,16 @@
 //////////////////////////////////////
 // Get latest movies
 
-const handelGetMovies = (req , res ,request ,authKey , filmType , pageType ) => {
+const handelGetMovies = ( req , res ,request ,authKey , filmType , pageType ) => {
 
-    const page = 1;
+    let page = 1;
+    let url= '';
+    if (filmType === 'all'){
+        url = `https://api.themoviedb.org/3/trending/${filmType}/${pageType}?api_key=${authKey}`;
+    }else{
+        url = `https://api.themoviedb.org/3/${filmType}/${pageType}?api_key=${authKey}&language=en-US&page=${page}`;
+    }
+    
     //setup headers with auth key
     var headers = {
         'Accept': 'application/json',
@@ -11,7 +18,7 @@ const handelGetMovies = (req , res ,request ,authKey , filmType , pageType ) => 
 
     //Setup option with url and series ID
     var options = {
-        url: `https://api.themoviedb.org/3/${filmType}/${pageType}?api_key=${authKey}&language=en-US&page=${page}`,
+        url: url,
         headers: headers
     };
     // get the response and send it back to main site
@@ -23,12 +30,12 @@ const handelGetMovies = (req , res ,request ,authKey , filmType , pageType ) => 
             // send back page not found
             res.json('404')
         } else {
-            // try again by resending request
+            // try again by resend request
             request(options, callback);
         }
     }
 
-    // use npm package request to get the API response send options and callback resevese response
+    // use npm package request to get the API response send options and callback receive response
     request(options, callback);
 
 }
