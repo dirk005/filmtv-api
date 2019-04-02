@@ -18,7 +18,20 @@ const tv = 'tv';
 const app = express();
 app.use(helmet());
 app.use(bodyParser.json()); 
-app.use(cors());
+
+// Add cors
+var whitelist = ['https://example.com']
+var corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
+}
+
+app.use(cors()); //app.use(cors(corsOptions));
 
 //Default page to see if server is working
 app.get('/', (req, res) => res.send('it is working'))
