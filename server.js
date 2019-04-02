@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////
 // Server for filmtv
-
+require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -10,7 +10,7 @@ const request = require('request');
 const getMovies = require('./controllers/getMovies');
 
 //set up variables
-const authKey = 'e88f04a0c3ba730c268e1240320d9aa8';
+const authKey = process.env.FILMTV_AUTH_KEY;
 const movie = 'movie';
 const tv = 'tv';
 
