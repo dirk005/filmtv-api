@@ -2,6 +2,7 @@
 // Server for filmtv
 require('dotenv').config()
 const express = require('express');
+const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const request = require('request');
@@ -15,10 +16,11 @@ const movie = 'movie';
 const tv = 'tv';
 
 const app = express();
+app.use(helmet());
 app.use(bodyParser.json()); 
 app.use(cors());
 
-//default page to see if server is working
+//Default page to see if server is working
 app.get('/', (req, res) => res.send('it is working'))
 
 //GET MOVIES AND SERIES DETAILS 
